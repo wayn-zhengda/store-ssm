@@ -1,0 +1,35 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ss.upupoo.com.mapper.SeckillMapper">
+    <resultMap id="allColumnMap" type="ss.upupoo.com.entity.SeckillEntity">
+        <id column="seckill_id" property="seckillId" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="number" property="number" jdbcType="int"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <update id="reduceNumber" parameterType="java.lang.Integer">
+        UPDATE seckill
+        <set>
+            number = number-1
+        </set>
+        WHERE seckill_id=#{seckillId}
+        AND <![CDATA[ start_time <= #{killTime} ]]> 
+        AND end_time >= #{killTime}
+        AND number > 0;
+    </update>
+    <select id="getById" resultType="ss.upupoo.com.entity.SeckillEntity">
+        SELECT <include refid="allColumnMap"/>
+        FROM seckill
+        WHERE seckill_id=#{seckillId}
+    </select>
+    <select id="listAll" resultType="ss.upupoo.com.entity.SeckillEntity">
+        SELECT <include refid="allColumnMap"/>
+        FROM seckill
+        ORDER BY create_time DESC
+        limit #{offset},#{limit}
+    </select>
+</mapper>

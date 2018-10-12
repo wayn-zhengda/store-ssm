@@ -17,11 +17,18 @@ public interface SeckillMapper {
     int reduceNumber(long seckillId, Date seckillDate);
 
     /**
-     *
+     * 根据Id查询商品
      * @param seckillId
      * @return
      */
     SeckillEntity getById(long seckillId);
 
+    /**
+     *
+     * 获取商品的列表
+     * @param offset
+     * @param limit
+     * @return
+     */
     List<SeckillEntity> listAll(int offset, int limit);
 }
